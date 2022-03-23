@@ -3,6 +3,13 @@ import express from "express"; //"type":"moule"
 import { MongoClient } from "mongodb";
 import cors from "cors";
 import dotenv from "dotenv";
+import {
+  getMovieById,
+  createMovies,
+  deleteMovieById,
+  getAllMovies,
+  updateMovieById,
+} from "./helper.js";
 dotenv.config();
 console.log(process.env.MONGO_URL);
 const app = express();
@@ -89,19 +96,15 @@ async function createConnection() {
   console.log("Mongo is connected ✌️😊");
   return client;
 }
-const client = await createConnection();
+export const client = await createConnection();
 //-------------Localhost home page(/)---------------
 app.get("/", function (request, response) {
   response.send("Hello World!!!");
 });
-//-------------------localhost:4000/movies-----------------------
+//-------------------Get movies:localhost:4000/movies-----------------------
 app.get("/movies", async function (request, response) {
   //db.movies.find({})
-  const movies = await client
-    .db("b30wd")
-    .collection("movies")
-    .find({})
-    .toArray();
+  const movies = await getAllMovies();
   response.send(movies);
 });
 //-------------------Get movie by id:localhost:4000/movies/id-----------------------
@@ -111,10 +114,7 @@ app.get("/movies/:id", async function (request, response) {
   //db.movies.findOne({id:"102"})
   const { id } = request.params;
   //const movie = movies.find((mv) => mv.id === id);
-  const movie = await client
-    .db("b30wd")
-    .collection("movies")
-    .findOne({ id: id });
+  const movie = await getMovieById(id);
   console.log(movie);
   movie
     ? response.send(movie)
@@ -127,22 +127,16 @@ app.delete("/movies/:id", async function (request, response) {
   //db.movies.deleteOne({id:"102"})
   const { id } = request.params;
   //const movie = movies.find((mv) => mv.id === id);
-  const result = await client
-    .db("b30wd")
-    .collection("movies")
-    .deleteOne({ id: id });
+  const result = await deleteMovieById(id);
   response.send(result);
 });
-//-------------------Update(Edit) movie by id:localhost:4000/movies/id-----------------------
+//-------------------Update(Edit)(put) movie by id:localhost:4000/movies/id-----------------------
 app.put("/movies/:id", async function (request, response) {
   console.log(request.params);
   //db.movies.updateOne({id:"102"},{$set:updateData})
   const { id } = request.params;
   const updateData = request.body;
-  const result = await client
-    .db("b30wd")
-    .collection("movies")
-    .updateOne({ id: id }, { $set: updateData });
+  const result = await updateMovieById(id, updateData);
   response.send(result);
 });
 //-----------------Post(create) movie-----------------------------
@@ -150,7 +144,7 @@ app.post("/movies", async function (request, response) {
   //db.movies.insertMany(data)
   const data = request.body;
   console.log(data);
-  const result = await client.db("b30wd").collection("movies").insertMany(data);
+  const result = await createMovies(data);
   response.send(result);
 });
 app.listen(PORT, () => console.log(`Server started  in ${PORT}`));
