@@ -1,6 +1,7 @@
 //const express = require("express"); //"type":"commonjs"
 import express from "express"; //"type":"moule"
 import { MongoClient } from "mongodb";
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 console.log(process.env.MONGO_URL);
@@ -76,6 +77,7 @@ const movies = [
     trailer: "https://www.youtube.com/embed/NgsQ8mVkN8w",
   },
 ];
+app.use(cors());
 //middle ware -> Intercept the all request and converting the body into json
 app.use(express.json());
 
