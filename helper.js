@@ -18,3 +18,5 @@ export async function updateMovieById(id, updateData) {
     .collection("movies")
     .updateOne({ id: id }, { $set: updateData });
 }
+
+//these allare called db commands
