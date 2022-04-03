@@ -4,13 +4,7 @@ import { MongoClient } from "mongodb";
 import cors from "cors";
 import dotenv from "dotenv";
 import { moviesRouter } from "./routes/movies.js";
-import {
-  getMovieById,
-  createMovies,
-  deleteMovieById,
-  getAllMovies,
-  updateMovieById,
-} from "./helper.js";
+import { usersRouter } from "./routes/users.js";
 dotenv.config();
 console.log(process.env.MONGO_URL);
 const app = express();
@@ -104,5 +98,7 @@ app.get("/", function (request, response) {
 });
 //express concept to connect two files in node
 app.use("/movies", moviesRouter);
+app.use("/users", usersRouter);
 
 app.listen(PORT, () => console.log(`Server started  in ${PORT}`));
+

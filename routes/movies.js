@@ -7,7 +7,7 @@ import {
   getMovieById,
   updateMovieById,
 } from "../helper.js";
-//-------------------movies Api---------------------------------
+//-------------------movies Api's---------------------------------
 //-------------------Get movies:localhost:4000/movies-----------------------
 router.get("/", async function (request, response) {
   //db.movies.find({})
