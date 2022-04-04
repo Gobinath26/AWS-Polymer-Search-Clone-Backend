@@ -3,8 +3,7 @@ import express from "express"; //"type":"moule"
 import { MongoClient } from "mongodb";
 import cors from "cors";
 import dotenv from "dotenv";
-import { moviesRouter } from "./routes/movies.js";
-import { usersRouter } from "./routes/users.js";
+import { mobilesRouter } from "./routes/mobiles.js";
 dotenv.config();
 console.log(process.env.MONGO_URL);
 const app = express();//Inbuilt middleware
@@ -97,8 +96,8 @@ app.get("/", function (request, response) {
   response.send("Hello World!!!");
 });
 //express concept to connect two files in node
-app.use("/movies", moviesRouter);
-app.use("/users", usersRouter);
+app.use("/mobiles", mobilesRouter);
+
 
 app.listen(PORT, () => console.log(`Server started  in ${PORT}`));
 
