@@ -7,7 +7,7 @@ import { moviesRouter } from "./routes/movies.js";
 import { usersRouter } from "./routes/users.js";
 dotenv.config();
 console.log(process.env.MONGO_URL);
-const app = express();
+const app = express();//Inbuilt middleware
 const PORT = process.env.PORT;
 // const movies = [
 //   {
@@ -79,7 +79,7 @@ const PORT = process.env.PORT;
 //     trailer: "https://www.youtube.com/embed/NgsQ8mVkN8w",
 //   },
 // ];
-app.use(cors());
+app.use(cors());// cors - 3rd party middleware
 //middle ware -> Intercept the all request and converting the body into json
 app.use(express.json());
 

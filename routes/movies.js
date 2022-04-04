@@ -7,15 +7,16 @@ import {
   getMovieById,
   updateMovieById,
 } from "../helper.js";
+import {auth} from "../middleware/auth.js";
 //-------------------movies Api's---------------------------------
 //-------------------Get movies:localhost:4000/movies-----------------------
-router.get("/", async function (request, response) {
+router.get("/",auth, async function (request, response) {
   //db.movies.find({})
   const movies = await getAllMovies();
   response.send(movies);
 });
 //-------------------Get movie by id:localhost:4000/movies/id-----------------------
-router.get("/:id", async function (request, response) {
+router.get("/:id",auth, async function (request, response) {
   console.log(request.params);
   //filter/find
   //db.movies.findOne({id:"102"})
@@ -47,7 +48,7 @@ router.put("/:id", async function (request, response) {
   response.send(result);
 });
 //-----------------Post(create) movie-----------------------------
-router.post("/", async function (request, response) {
+router.post("/",auth, async function (request, response) {
   //db.movies.insertMany(data)
   const data = request.body;
   console.log(data);
