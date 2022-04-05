@@ -7,7 +7,7 @@ import {
   getMovieById,
   updateMovieById,
 } from "../helper.js";
-import {auth} from "../middleware/auth.js";
+import { auth } from "../middleware/auth.js";
 //-------------------Movies Api's---------------------------------
 //-------------------Get movies:localhost:4000/movies-----------------------
 router.get("/", async function (request, response) {
