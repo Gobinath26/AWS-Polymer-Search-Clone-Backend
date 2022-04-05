@@ -1,7 +1,12 @@
 import { client } from "./index.js";
+import { ObjectId } from "mongodb";
 
 export async function getMovieById(id) {
-  return await client.db("b30wd").collection("movies").findOne({ id: id });
+  console.log(id, ObjectId(id));
+  return await client
+    .db("b30wd")
+    .collection("movies")
+    .findOne({ _id: ObjectId(id) });
 }
 export async function createMovies(data) {
   return await client.db("b30wd").collection("movies").insertMany(data);
@@ -16,7 +21,10 @@ export async function getUserByName(username) {
     .findOne({ username: username });
 }
 export async function deleteMovieById(id) {
-  return await client.db("b30wd").collection("movies").deleteOne({ id: id });
+  return await client
+    .db("b30wd")
+    .collection("movies")
+    .deleteOne({ _id: ObjectId(id) });
 }
 export async function getAllMovies() {
   return await client.db("b30wd").collection("movies").find({}).toArray();
@@ -25,7 +33,7 @@ export async function updateMovieById(id, updateData) {
   return await client
     .db("b30wd")
     .collection("movies")
-    .updateOne({ id: id }, { $set: updateData });
+    .updateOne({ _id: ObjectId(id) }, { $set: updateData });
 }
 
 //these allare called db commands

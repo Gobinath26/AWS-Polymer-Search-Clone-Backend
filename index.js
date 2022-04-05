@@ -7,7 +7,7 @@ import { moviesRouter } from "./routes/movies.js";
 import { usersRouter } from "./routes/users.js";
 dotenv.config();
 console.log(process.env.MONGO_URL);
-const app = express();//Inbuilt middleware
+const app = express(); //Inbuilt middleware
 const PORT = process.env.PORT;
 // const movies = [
 //   {
@@ -79,7 +79,7 @@ const PORT = process.env.PORT;
 //     trailer: "https://www.youtube.com/embed/NgsQ8mVkN8w",
 //   },
 // ];
-app.use(cors());// cors - 3rd party middleware
+app.use(cors()); // cors - 3rd party middleware
 //middle ware -> Intercept the all request and converting the body into json
 app.use(express.json());
 
@@ -99,6 +99,52 @@ app.get("/", function (request, response) {
 //express concept to connect two files in node
 app.use("/movies", moviesRouter);
 app.use("/users", usersRouter);
+//--------------------Mobiles Data----------------------
+
+// const mobiles = [
+//   {
+//     model: "OnePlus 9 5G",
+//     img: "https://m.media-amazon.com/images/I/61fy+u9uqPL._SX679_.jpg",
+//     company: "Oneplus",
+//   },
+//   {
+//     model: "Iphone 13 mini",
+//     img: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-mini-blue-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1645572315986",
+//     company: "Apple",
+//   },
+//   {
+//     model: "Samsung s21 ultra",
+//     img: "https://m.media-amazon.com/images/I/81kfA-GtWwL._SY606_.jpg",
+//     company: "Samsung",
+//   },
+//   {
+//     model: "xiomi mi 11",
+//     img: "https://m.media-amazon.com/images/I/51K4vNxMAhS._AC_SX522_.jpg",
+//     company: "xiomi",
+//   },
+// ];
+
+//-------------------Mobiles Api's---------------------------------
+//-------------------Get all mobiles:localhost:4000/mobiles------------
+app.get("/mobiles", async function (request, response) {
+  //db.mobiles.find({})
+  const mobiles = await client
+    .db("b30wd")
+    .collection("mobiles")
+    .find({})
+    .toArray();
+  response.send(mobiles);
+});
+//--------------Post(create) mobiles:localhost:4000/mobiles---------------
+app.post("/mobiles", async function (request, response) {
+  //db.movies.insertMany(data)
+  const data = request.body;
+  console.log(data);
+  const result = await client
+    .db("b30wd")
+    .collection("mobiles")
+    .insertMany(data);
+  response.send(result);
+});
 
 app.listen(PORT, () => console.log(`Server started  in ${PORT}`));
-
