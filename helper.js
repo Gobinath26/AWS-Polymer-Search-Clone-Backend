@@ -1,39 +1,14 @@
 import { client } from "./index.js";
-import { ObjectId } from "mongodb";
 
-export async function getMovieById(id) {
-  console.log(id, ObjectId(id));
-  return await client
-    .db("b30wd")
-    .collection("movies")
-    .findOne({ _id: ObjectId(id) });
+// Create Cards
+export async function createCards(data) {
+  return await client.db("b30wd").collection("cards").insertMany(data);
 }
-export async function createMovies(data) {
-  return await client.db("b30wd").collection("movies").insertMany(data);
+
+// Get All Cards
+export async function getAllCards() {
+  return await client.db("b30wd").collection("cards").find({}).toArray();
 }
-export async function createUser(data) {
-  return await client.db("b30wd").collection("users").insertOne(data);
-}
-export async function getUserByName(username) {
-  return await client
-    .db("b30wd")
-    .collection("users")
-    .findOne({ username: username });
-}
-export async function deleteMovieById(id) {
-  return await client
-    .db("b30wd")
-    .collection("movies")
-    .deleteOne({ _id: ObjectId(id) });
-}
-export async function getAllMovies() {
-  return await client.db("b30wd").collection("movies").find({}).toArray();
-}
-export async function updateMovieById(id, updateData) {
-  return await client
-    .db("b30wd")
-    .collection("movies")
-    .updateOne({ _id: ObjectId(id) }, { $set: updateData });
-}
+
 
 //these allare called db commands
